@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
+  <title></title>
+
+  <link rel="manifest" href="manifest.json">
+
+  <!-- un-comment this code to enable service worker
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(() => console.log('service worker installed'))
+          .catch(err => console.log('Error', err));
+      }
+    </script>-->
+
+  <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+
+  <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+  <!-- ionic/angularjs js -->
+  <script src="lib/ionic/js/ionic.bundle.js"></script>
+  <script src="js/collide.js"></script>
+
+
+  <!-- cordova script (this will be a 404 during development) -->
+
+  <!---->
+    <script src="cordova.js"></script>
+
+  <!-- your app's js -->
+  <script src="js/app.js"></script>
+  <script src="js/politifact.js"></script>
+  <script src="js/ngStorage.min.js"></script>
+  <!---->
+  <script src="js/jquery-3.1.1.min.js"></script>
+
+  <script src="js/ionic.ion.imagecachefactory.js"></script>
+  <script src="lib/ionic/js/ionic.tdcards2.js"></script>
+  
+   <script src="js/ng-cordova.min.js"></script>
+  <!--
+  <script src="bower_components/ngCordova/dist/ng-cordova.js"></script>
+  <script src=cordova.js></script>
+
+  <script src=cordova_plugins.js></script>
+  -->
+
+  <style>
+    html,
+    body {
+      max-width: 100%;
+      overflow-x: hidden;
+      /*overflow-y:hidden;*/
+    }
+    
+    .button .icon:before {
+      font-size:6vw !important;
+
+
+    }
+
+.scroll-bar-indicator
+{
+  display: none;
+}
+
+.invisible-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+    #input {
+      position: absolute;
+      top: -250px;
+    }
+    
+    .pane {
+      background-color: black;
+      overflow-x: hidden;
+    }
+    
+    body {
+      color: white;
+       background-color:black;
+    }
+    
+    .blur {
+      -webkit-filter: blur(2vmin);
+      -moz-filter: blur(2vmin);
+      -o-filter: blur(2vmin);
+      -ms-filter: blur(2vmin);
+      filter: blur(2vmin);
+    }
+    
+    .button {
+      min-width: 0px !important;
+      min-height: 0px !important;
+    }
+
+    .pane{
+      background-color:black;
+    }
+
+  
+
+    .modal {
+      background-image: url("img/bck.jpg");
+      background-size:cover;
+      background-position:center;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+    }
+/**/
+  .fade {
+    position: absolute;
+    left: 0;
+    top:0;
+    width:100%;
+    height:100%;
+    transition:.7s opacity ease-out;
+    -webkit-transform: translateZ(0);
+  }
+    
+    .pointer {
+      z-index: 99 !important;
+    }
+
+    .check{
+      color:green !important;
+    }
+    .close{
+      color:red !important;
+    }
+    .halfopat{
+      opacity:.3 !important;
+    }
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+    
+    .dont-break-out {
+      /*
+
+regex to add &shy; 
+
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+*/
+
+}
+
+
+
+.fadeNextLeft.ng-hide-add {
+  -webkit-animation:0.5s leftout;
+  animation:0.5s hide;
+  -webkit-transform: translateZ(0)
+}
+
+.fadeNextLeft.ng-hide-remove {
+  -webkit-animation:0.5s fadein;
+  animation:0.5s hide;
+  -webkit-transform: translateZ(0)
+}
+
+.fadeNextRight.ng-hide-add {
+  -webkit-animation:0.5s rightout;
+  animation:0.5s hide;
+  -webkit-transform: translateZ(0)
+}
+
+.fadeNextRight.ng-hide-remove {
+  -webkit-animation:0.5s fadein;
+  animation:0.5s hide;
+  -webkit-transform: translateZ(0)
+}
+
+.fadeGuess.ng-hide-remove {
+  -webkit-animation:0.5s fadein;
+  animation:0.5s hide;
+  -webkit-transform: translateZ(0)
+}
+
+
+
+.texture-overlay {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-image: url(img/grid.png);
+}
+
+
+@-webkit-keyframes leftout {  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    -webkit-transform: translateZ(0)
+  }
+}
+
+@-webkit-keyframes rightout {  from {
+    opacity: 1;
+    -webkit-transform: translateZ(0)
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+    -webkit-transform: translateZ(0)
+  }
+}
+
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0;
+    -webkit-transform: translateZ(0)
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translateZ(0)
+  }
+}
+@-webkit-keyframes fadeout {
+  from {
+    opacity: 1;
+    -webkit-transform: translateZ(0)
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translateZ(0)
+  }
+}
+
+    
+  </style>
+</head>
+
+<body class="ng-cloak platform-ios platform-cordova platform-webview" ng-app="starter" ng-controller="AppCtrl">
+  <ion-pane>
+
+    <!---->
+    <ion-content has-bouncing="false" style="margin-top:23px">
+
+      <!--18 for iOS     0 for Android-->
+      <!--ng-click="openModalmenu()"-->
+      <!--
+      <i ng-click="openModalmenu()" style="position:absolute;left:6vw;top:3vh;font-size:6.4vh;z-index:999 !important;color:#E3655B"
+        class="icon ion-android-home"></i> 
+-->
+<img ng-if="!guessmade" ng-click="politifacturl()" style="position:absolute;width:40vw;left:0;right:0;margin-left:auto;margin-right:auto;top:3.5vh;z-index:999" src="img/polilogo.png">
+
+<img ng-click="openModalmenu()" style="position:absolute;width:10vw;left:6vw;top:3vh;z-index:999" src="img/149023.svg">
+
+        <!--ion-navicon-round-->
+        <!--ion-person-->
+        <!--ion-ios-pulse-strong-->
+        <!--ion-quote-->
+<!--
+      <i ng-click="openModalstats()" style="position:absolute;right:6vw;top:2vh;font-size:7.8vh;z-index:999 !important;color:#E3655B"
+        class="icon ion-stats-bars"></i>
+-->
+        <img ng-click="openModalstats()" style="position:absolute;width:10vw;right:6vw;top:3vh;z-index:999" src="img/stats.svg">
+
+
+      <div resize-max on-swipe-right="getNewQuestion()" on-swipe-left="getNewQuestion()" style="position:absolute;top:0;left:0;width:100%;min-height:80vh;height:100%;z-index:1">
+      </div>
+      <!--ng-click="getNewQuestion()"-->
+      <!--
+      <input id="input" ng-blur="focus()">
+      </input>
+      -->
+
+      <div ng-if="guessmade" style="position:absolute">
+        <div style="text-align:center;padding-top:17vmin;padding-left:3vw;padding-right:4vw">
+
+<!--
+          <i ng-cloak ng-show="correct" style="color:green;font-size:38vmin" class="icon ion-checkmark ng-cloak"></i>
+          <i ng-cloak ng-show="!correct" style="color:red;font-size:38vmin" class="icon ion-close ng-cloak"></i>
+          <br><br>
+          <span style="font-size:13vmin">
+            <B> {{current.ruling.ruling}}</B>
+          </span>
+-->
+
+
+
+<div style="position:absolute;left:0;right:0;margin:auto;top:5vh;font-size:4vh !important">
+<!---->
+<i style="padding-left:1vw;padding-right:1vw;color:green" ng-class="{check:prevcorr[0],close:!prevcorr[0],'ion-checkmark':prevcorr[0],'ion-close-round':!prevcorr[0],halfopat:halfopacity[0]}" class="icon"></i>
+<i ng-show="prevcorr.length>1" style="padding-left:1vw;padding-right:1vw;color:green" ng-class="{check:prevcorr[1],close:!prevcorr[1],'ion-checkmark':prevcorr[1],'ion-close-round':!prevcorr[1],halfopat:halfopacity[1]}" class="icon"></i>
+<i ng-show="prevcorr.length>2" style="padding-left:1vw;padding-right:1vw;color:green" ng-class="{check:prevcorr[2],close:!prevcorr[2],'ion-checkmark':prevcorr[2],'ion-close-round':!prevcorr[2],halfopat:halfopacity[2]}" class="icon"></i>
+<i ng-show="prevcorr.length>3" style="padding-left:1vw;padding-right:1vw;color:green" ng-class="{check:prevcorr[3],close:!prevcorr[3],'ion-checkmark':prevcorr[3],'ion-close-round':!prevcorr[3],halfopat:halfopacity[3]}" class="icon"></i>
+<i ng-show="prevcorr.length>4" style="padding-left:1vw;padding-right:1vw;color:green" ng-class="{check:prevcorr[4],close:!prevcorr[4],'ion-checkmark':prevcorr[4],'ion-close-round':!prevcorr[4],halfopat:halfopacity[4]}" class="icon"></i>
+
+
+</div>
+
+
+<!---->
+<img ng-src="{{rulingsrc}}" style="position:absolute;width:40vh;top:12vh;left:0;right:0;margin-left:auto;margin-right:auto;padding-bottom:4vmin">
+{{rulingsrc}}
+<!--
+<img ng-src="{{rulingsrcjpg}}" style="width:39vh;padding-top:calc(15vh - 18vw);padding-bottom:4vmin;z-index:-3">
+-->
+          
+
+          <div style="font-size:5.2vmin;line-height:6vmin;font-style: italic;padding-bottom:4vmin;padding-top:calc(50vh - 17vw)">
+            {{current.ruling_headline}}
+          </div>
+
+
+
+          <button ng-click="readmore()" class="button" style="z-index:99 !important;background-color:{{rulingcolor}}; color:white;width:42vmin;height:8.7vh;margin-right:2vw;font-size:6vmin">
+            <b>FactCheck</b>
+          </button>
+
+           <button ng-click="getNewQuestion()" class="button button-positive" style="z-index:99 !important;width:21vh;height:8.7vh;margin-left:2vw !important;font-size:3vh">
+            <b><span ng-show="prevcorr.length<5">Next </span> <span ng-show="prevcorr.length==5">Summary </span>    </b>  <i ng-show="prevcorr.length<5" class="icon ion-arrow-right-c"></i>
+          </button>
+         
+<!--
+          <div style="font-size:3vmin;font-style: italic;padding-top:3vmin">
+            tap or swipe anywhere to continue
+          </div>
+-->
+<!-- On every 10 modal
+          <div style="font-size:6vmin;line-height:6vmin;padding-top:4vmin">
+            <b>{{record[0]}}</b> correct of <b>{{record[1]}}</b> answered
+            <br>
+            <b style="color:rgb({{(Math.floor((1-record[0]/record[1])*100))*3}},{{Math.floor(record[0]/record[1]*100)*3}},50)">
+                {{Math.floor(record[0]/record[1]*100)}}%
+            </b> accurate
+          </div>
+-->
+
+      <div ng-show="!donotshowquestper" style="font-size:6vmin;line-height:6vmin;padding-top:4vmin">
+           
+            
+            <b style="color:rgb({{(Math.floor((1-questionpercent)*100))*3}},{{Math.floor(questionpercent*100)*3}},50)">{{Math.floor(fullper)}}%</b><span style="font-size:4vmin"> of players answer correctly</span>
+          </div>
+
+
+          <div style="z-index:999999999999999 !important;text-align:center;padding-top:4vmin;background-color:transparent">
+            <img class="button" ng-click="facebook()" src="img/1.svg" class="pointer" style="width:17vmin;max-width:100px;z-index:99999999999999 !important;padding-left:.6vmin;padding-right:.6vmin;background-color:transparent !important">
+            <img class="button" ng-click="twitter()" src="img/2.svg" class="pointer" style="width:17vmin;max-width:100px;z-index:9999 !important;padding-left:.6vmin;padding-right:.6vmin;background-color:transparent !important">
+            <img class="button" ng-click="googleplus()" class="pointer" src="img/3.svg" style="width:17vmin;max-width:100px;z-index:9999 !important;padding-left:.6vmin;padding-right:.6vmin;background-color:transparent !important">
+            <!--
+            <img ng-click="github()" class="pointer" src="img/github.svg" style="width:8%">
+            -->
+          </div>
+        </div>
+      </div>
+
+
+      <div ng-if="!guessmade">
+        <td-cards on-touch="onTouch()" on-release="onRelease()">
+          <td-card on-destroy="cardDestroyed()" on-transition-left="cardSwipedLeft()" on-transition-right="cardSwipedRight()">
+            <div class="image">
+              <div class="no no-text">FALSE</div>
+              <div class="yes yes-text">TRUE</div>
+              <img ng-src="{{ card.image }}">
+              <div class="td-item">
+                <div class="dont-break-out" style="padding:5vmin !important;padding-top:19vmin !important;font-size:11vmin !important;line-height:11vmin !important;color:white !important;"
+                  compile="current.statement"></div>
+
+                <div style="padding:4vmin;padding-top:0vh !important;font-size:7.2vmin;line-height:6vmin">
+                  
+                    <div style="text-align:center;line-height:4.5vmin">
+                      <b style="line-height:7vmin">
+                        <span ng-show="current.speaker.first_name.length">{{current.speaker.first_name}}</span>
+                        <span>{{current.speaker.last_name}}</span>
+                      </b>
+                  
+
+                  <i style="font-size:4vmin">
+                    <span ng-show="current.speaker.party.party !== 'None'">
+                    {{current.speaker.party.party}}
+                    </span>
+                  </i>
+
+                  <br>
+
+                  <i style="font-size:4.5vmin;font-style: italic;line-height:3vmin">
+                    {{current.statement_context}}
+                  </i>
+                  <br><br>
+                  <b>
+                    <i style="font-size:6vmin">
+                    {{current.statement_date|date:medium}}
+                    </i>
+                  </b>
+                </div>
+                </div>
+                <!-- Item ends -->
+              </div>
+            </div>
+          </td-card>
+          <td-card id="end-card" drag="false">
+          </td-card>
+        </td-cards>
+      </div>
+      <!--
+      <img src={{current.speaker.canonical_photo}}>
+      -->
+
+    </ion-content>
+
+    <!---->
+    <div style="position:fixed;top:0px;left:0px;width:100%;height:100%;z-index:-5;background-color:rgba(0,0,0,.6)"></div>
+
+<div style="z-index:-8" class="texture-overlay"></div>
+<!---->
+    <div class="blur fade" ng-animate-swap="current.speaker.canonical_photo"   style="position:absolute;top:0px;left:0px;width:100%;height:100%;z-index:-9;background: url({{current.speaker.canonical_photo}}) repeat-y fixed center;background-size:cover">
+    </div>
+    <!-- -->
+<div class="blur" style="position:absolute;top:0px;left:0px;width:100%;height:100%;z-index:-10;background: url({{lastphoto}}) repeat-y fixed center;background-size:cover">
+    </div>
+   
+<!--
+<div style="position:absolute;top:0px;left:0px;width:100%;height:100%;z-index:-11;background: url(img/bckg.jpg) repeat-y fixed center;background-size:cover">
+    </div>
+-->
+  </ion-pane>
+
+  <script id="menu.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-content style="margin-top:23px">
+
+
+        <!--18 for iOS   ()()()  0 for Android-->
+        <i ng-show="!firstopen" ng-click="closeModalmenu()" style="position:absolute;right:8vw;top:.6vh;font-size:12vmin;z-index:999 !important;color:#E3655B"
+          class="icon ion-arrow-return-left">
+        </i>
+        <!--18 for iOS     0 for Android-->
+  <img src="img/logo.png" style="position:absolute;width:65vmin;padding-left:6vw;padding-top:3vw">
+
+<div style="position:absolute;font-size:4vmin;padding-top:15vw;padding-left:6vmin">
+            a <img src="img/politifact.svg" style="width:20vmin"> <b style="font-size:5vmin"> </b>      game <i style="font-size:3.2vmin">by <b>Christopher Cinq-Mars Jarvis</b></i>
+          </div>
+ <!--
+
+<img src="img/logo.png" style="width:75vmin;padding-left:6vw;padding-top:4vw">
+
+<div style="font-size:4vmin;margin-top:2vmin;line-height:3vmin;padding-left:6vmin">
+            The <img src="img/politifact.svg" style="width:20vmin"> <b style="font-size:5vmin"> </b>      game <i style="font-size:3vmin">by Christopher Cinq-Mars Jarvis</i>
+          </div>-->
+          
+        <div style="padding-left:5vw; padding-right:3vw;font-size:6vmin;padding-top:calc(5vh + 15vw);line-height:6vmin">Simply swipe to the left <!--<i style="font-style: italic">(or tap/click the right half of the screen)</i>--> to <b>guess a claim is false</b>          or swipe to the right <!--<i style="font-style: italic">(or tap/click the left half of the screen)</i>--> to <b>guess it is true</b>.
+        </div>
+  
+<div ng-show="!firstopen">
+
+<div ng-click="politifacturl()" style="text-align:center;padding-top:4vh">
+  <img style="width:70%" src="img/politifact.svg">
+</div>
+<div style="padding-right:4vh;padding-left:4vh;padding-top:2vh">
+<i style="font-style: italic;font-size:4.2vmin">
+          <span style="font-size:4.3vmin;line-height:4.3vmin">
+            <b>PolitiTruth</b> is made in partnership with the Pulitzer Prize winning organization         
+              <b>PolitiFact</b>
+             in the hopes of encouraging players to better discern sources of information while gathering beneficial statistics on public misconceptions. By tapping into our competitive nature, we hope to expand political consciousness. 
+          </span>
+          </i>
+</div>
+<div style="text-align:center;padding-top:4vh">
+<button ng-click="author()" class="button" style="z-index:99 !important;background-color:#E3655B; color:white;width:21vh;height:8.7vh;margin-right:2vw;font-size:3vh">
+            <b>The Author</b>
+          </button>
+
+           <button ng-click="read()"  class="button button-positive" style="z-index:99 !important;width:21vh;height:8.7vh;margin-left:2vw !important;font-size:3vh">
+            <b>Read More</b> 
+          </button>
+          
+          <div ng-click="resetgame()" style="font-size:2vh;padding-top:3vh;text-decoration: underline">
+          <b>Reset Game Data?</b></div>
+</div>
+</div>
+
+<div ng-show="firstopen" style="text-align:center">
+
+<img style="width:95vw;max-width:57vh;padding-top:5vh;padding-bottom:5vh;padding-left:3vw;padding-right:4.5vw !important" src="img/tut.png">
+<div style="position:absolute;width:100%;top:33vh;height:30vh;background-color:rgba(0,0,0,.4);box-shadow: 0px 0px 30vh rgba(0,0,0,1);z-index:-1"></div>
+
+<button ng-click="closeModalmenu()" class="button button-positive" style="z-index:99 !important;width:28vh;height:8.7vh;margin-left:2vw !important;font-size:3vh">
+            <b>Get Started</b>  <i class="icon ion-arrow-right-c"></i>
+          </button>
+
+</div>
+<div ng-click="cinq()" style="padding-top:1vh">
+<img src="img/cmm2.png" style="width:41%;padding-top:3vmin;padding-left:25vmin">
+
+<div style="padding-top:2vh; width:57%;float:right;line-height:3.5vmin">
+          <b style="font-size:3vmin">© 2020 Cinq-Mars Media</b>  <br> <span style="font-size:2.5vmin">a 501(c)3 non-profit </span>
+        </div>
+</div>
+
+<!--
+        <div style="padding-left:5vw; padding-right:3vw;font-size:5vmin;padding-top:2vh;line-height:4vmin">
+        
+          <span style="text-decoration: underline; color:#33adff" ng-click="resetgame()">
+          
+            <i style="font-style: italic;font-size:4.2vmin">Want to <b>reset</b> your game and score?</i>
+           
+          </span>
+          <br><br>
+          
+          <i style="font-style: italic;font-size:4.2vmin">
+          <span style="font-size:4.2vmin">
+            <b>'PolitiFact: The Game'</b> was made in partnership with
+           
+              Cinq-Mars Media
+             in the hopes of encouraging players to better discern sources of information while gathering beneficial statistics on public misconceptions. By tapping into our competitive nature, we hope to expand the political consciousness of our players. 
+          </span>
+          </i>
+
+  
+          <br><br>
+          <span style="text-decoration: underline; color:#33adff" ng-click="closeModalmenu();openModalstats();">
+            <i style="font-style: italic;font-size:4.2vmin">Game <b>stats</b> are saved and analyzed online</i>
+          </span>
+          <br>
+        </div>
+    -->
+        <!--
+        <div style="padding-left:3vw; padding-right:3vw;font-size:4vmin;padding-top:5vh;text-align:center">Other Projects</div>
+        <br>
+        <div style="width:25%;float:left">
+          <img src="img/me.png" ng-click="me()" style="width:27vmin">
+        </div>
+        <div ng-click="cinq()" style="width:71%;float:right;font-size:3vmin;padding-top:1vh;padding-right:1.5vmin;font-style: italic;line-height:3vmin">
+          Christopher Cinq-Mars Jarvis is a filmmaker and game developer. His last game, Synonymy, was showcased at E3, featured at
+          GDC and is narrated by biologist and author Richard Dawkins. He is also a filmmaker and has received a Student
+          Academy Award nomination and top prizes at several Oscar-qualifying festivals. He runs a non-profit organization,
+          Cinq-Mars Media, of which this game is a part.
+        </div>
+        <br><br><br><br><br><br>
+
+        <div style="text-align:center;width:100% !important;padding-top:5vmin">
+          <img ng-click="synonymy()" src="img/512.png" style="padding-left:1vmin;padding-right:1vmin;width:18vmin;max-width:90px">
+          <img ng-click="birds()" src="img/birds.png" style="padding-left:1vmin;padding-right:1vmin;width:18vmin;max-width:90px">
+          <img ng-click="tmm()" src="img/example.png" style="padding-left:1vmin;padding-right:1vmin;width:18vmin;max-width:90px">
+          <img ng-click="wordunk()" src="img/wordunknown.png" style="padding-left:1vmin;padding-right:1vmin;width:18vmin;max-width:90px">
+         
+          <img ng-click="caissa()" src="img/chess-icon.png" style="padding-left:1vmin;padding-right:1vmin;width:13vmin;max-width:90px">
+          <img ng-click="sugarsweet()" src="img/sugarsweet.png" style="padding-left:1vmin;padding-right:1vmin;width:13vmin;max-width:90px"><br>
+          </div>
+-->
+
+      </ion-content>
+    </ion-modal-view>
+  </script>
+
+  <script id="stats.html" type="text/ng-template">
+    <ion-modal-view>
+      <div style="margin-top:23px">
+        <!--18 for iOS     0 for Android-->
+        <i ng-click="closeModalstats()" style="position:absolute;right:8vw;top:calc(1vh + 18px);font-size:12vmin;z-index:999 !important;color:#E3655B"
+          class="icon ion-arrow-return-left">
+      </i>
+<!---->
+      <img src="img/logo.png" style="position:absolute;width:65vmin;padding-left:6vw;padding-top:3vw">
+
+<div style="position:absolute;font-size:4vmin;padding-top:15vw;padding-left:6vmin">
+            a <img src="img/politifact.svg" style="width:20vmin"> <b style="font-size:5vmin"> </b>      game <i style="font-size:3.2vmin">by <b>Christopher Cinq-Mars Jarvis</b></i>
+          </div>
+
+      <!--
+        <div style="position:absolute;margin-top:4vh;font-size:11vmin;color:white;padding-left:6vw">
+
+          <div style="font-size:4vmin;margin-top:6vmin;line-height:3vmin"> a <img src="img/politifact.svg" style="width:20vmin"> game by <b style="font-size:3vmin">Christopher Cinq-Mars Jarvis</b></div>
+        </div>
+-->
+
+<!--
+  <img class="button" ng-click="facebook()" src="img/1.svg" class="pointer" style="position:absolute;width:10vmin">
+  <img class="button" ng-click="twitter()" src="img/2.svg" class="pointer" style="position:absolute;width:3vmin">
+-->
+<!--
+
+<i style="position:absolute;font-size:8vmin;right:4vh;top:22vh" class="icon ion-share"></i>
+-->
+<div ng-show="nodata">
+<div style="padding:3vh;text-align:center;font-size:8vmin;line-height:9vmin;padding-top:calc(6vh + 16vw) !important">
+
+
+<i class="icon ion-wifi" style="font-size:35vh;color:rgb(228,62,51)"></i><br>
+  Connect to the internet to see in-depth statistics
+</div>
+</div>
+
+        <div ng-show="!nodata">
+          <div style="padding-left:5vw; padding-right:3vw;font-size:4.5vmin;padding-top:calc(5vh + 15vw);line-height:5vmin"><!--14vh-->
+            Total Games Played Globally:<b> <span ng-show="!fetcherror">{{globalgames | number}}</span><i style="color:rgb(228,62,51);font-size:4vmin" class="icon ion-wifi" ng-show="fetcherror"> No Internet</i></b><br> Global Avg %: <b style="color:rgb({{(100-Math.floor(globalavg))*3}},{{Math.floor(globalavg*3)}},50)"> {{Math.floor(globalavg)}}%</b><br>
+            <img src="img/std.png" style="position:absolute;right:3vw;top:calc(9vh + 18vw);width:57%;z-index:-5">
+
+          
+
+
+
+            <div style="font-size:8vmin;padding-top:3vmin"><span style="font-size:4vmin">You fall in the top </span><b style="color:rgb({{(100-Math.floor(percentile*100))*3}},{{Math.floor(percentile*100*3)}},50)"> {{Math.floor(toppercentile*100)}}<span style="color:white;font-size:5vmin">%</span></b>
+              <span style="font-size:4vmin"> of players globally</span>
+
+              <div style="float:right;font-size:3.5vmin;line-height:4vmin;margin-top:0vmin;padding-right:13vmin">
+                <b>{{record[0]}}</b> correct of <b>{{record[1]}}</b> answered <span ng-show="record[1]>0"> <b style="color:rgb({{(100-Math.floor(record[0]/record[1]*100))*3}},{{Math.floor(record[0]/record[1]*100*3)}},50)"> {{Math.floor(record[0]/record[1]*100)}}%</b> accurate</span>
+              </div>
+            </div>
+
+            <div style="padding-top:11vmin;margin-bottom:0 !important">
+              Most Common Misconceptions:
+            </div>
+            <hr>
+            <div ng-show="!mostwrongindexs.length">More Data Needed</div>
+            <ion-content class="padding" style="position:absolute;top:calc((5.5vh + 54.5vw) + 18px) !important;height:calc(70vh - 20vw) !important">
+              <div style="text-align:center;text-align:center;padding-left:1vmin;padding-right:1vmin;padding-bottom:2vmin" ng-repeat="mostwrongindex in mostwrongindexs"
+                ng-click="openstory($index)">
+                <b style="color:rgb({{Math.floor((1-mostwrongpercents[$index])*100*3)}},{{Math.floor(mostwrongpercents[$index]*100*3)}},50)">{{Math.floor(mostwrongpercents[$index]*100)}}%</b>
+                <i style="font-style: italic">{{mostwrongindex.ruling_headline}} </i> <i style="color:#33adff" class="icon ion-link"></i>
+              </div>
+              <!--
+              most wrong:<b> {{worst.ruling_headline}}</b><br>
+              global %: <b>{{response[3]*100}}</b>
+              -->
+            </ion-content>
+          </div>
+        </div>
+      </div>
+    </ion-modal-view>
+  </script>
+
+
+  <script id="popup.html" type="text/ng-template">
+    <ion-modal-view>
+<div style="font-size:15vh;padding-top:10vh;text-align:center">
+<b>{{numerator}}</b><span style="font-size:5vh;padding-left:2vh;padding-right:2vh">for</span><b>{{denom}}</b>
+</div>
+
+
+<div ng-show="record[1]>8" style="font-size:3.2vh;line-height:3.5vh;padding-left:2vh;padding-right:2vh;text-align:center;padding-bottom:1vh;padding-top:6vh">
+You've <span style="color:red" ng-show="perdiff<0"><b>decreased</b></span><span style="color:green" ng-show="perdiff==0"><b>maintained</b></span><span style="color:green" ng-show="perdiff>0"><b>improved</b></span> your score <span ng-show="perdiff!==0"><b>{{perdiffdisp}}</b>% points to </span> <span ng-show="perdiff==0">at</span><b style="color:rgb({{(100-Math.floor(record[0]/record[1]*100))*3}},{{Math.floor(record[0]/record[1]*100*3)}},50)"> {{Math.floor(record[0]/record[1]*100)}}%</b>.<b ng-show="perdiff>=0"> Keep it up! </b> <b ng-show="perdiff<0"> Keep trying! </b>
+</div>
+<!---->
+<div ng-show="record[1]<8" style="font-size:3.2vh;line-height:3.5vh;padding-left:2vh;padding-right:2vh;text-align:center;padding-bottom:1vh;padding-top:6vh">
+Your first average is <b style="color:rgb({{(100-Math.floor(record[0]/record[1]*100))*3}},{{Math.floor(record[0]/record[1]*100*3)}},50)"> {{Math.floor(record[0]/record[1]*100)}}%</b>. The current global average is <b style="color:rgb({{(100-Math.floor(globalavg))*3}},{{Math.floor(globalavg*3)}},50)"> {{Math.floor(globalavg)}}%</b>
+</div>
+
+
+<hr>
+
+
+
+
+
+<!---->
+<div style="height:50%;overflow:hidden;background-color:rgba(0,0,0,.4);background-size:cover;box-shadow: 0px 0px 30vh #000">
+<div ng-click="politimember()" ng-show="ad==2">
+<div style="text-align:center">
+<img src="img/truthsquad.jpg" style="width:90%;padding-top:1vh">
+<div style="text-align:left;padding:3vh;padding-top:2vh !important;font-size:2.5vh;line-height:3vh">In a world of wild talk and fake news, help us stand up for the facts and become a member of <b>PolitiFact’s</b> Truth Squad. By joining today you can ensure that our content remains free to all readers. Plus, you’ll receive a few exclusive perks! PolitiFact is committed to holding our leaders accountable but we can’t do it alone. Your support will help us maintain our small staff, budget and independent spirit. <b> Become a member today!</b></div>
+<!--
+<img src="img/politicons.png" style="width:50%">
+-->
+</div>
+</div>
+
+<div ng-show="ad==4">
+
+<div ng-click="cinq()" style="padding-top:0vh;text-align:center">
+<img src="img/cmm2.png" style="width:70%;padding:5vh;padding-bottom:3vh !important">
+  <div style="font-size:2.8vh;line-height:3.3vh;padding:3vh;padding-top:0vh !important">
+<b>Cinq-Mars Media</b> is a 501(c)3 non-profit specializing in educational software for the social good. </div>
+
+</div>
+<div ng-click="dc()" style="padding-top:1vh;padding-left:10vmin"><!-- && syn-->
+ <img style="width:17%" src="img/dc.png"> 
+ <div style="width:78%;float:right;padding-top:1.5vh;font-size:3.7vmin;line-height:4.2vmin">
+<div style="padding-top:0vh">
+<b>The Devil's Calculator</b>, is our latest project and was named on the 10 best Indie Games of 2019 by PAX
+</div>
+</div>
+</div>
+
+</div>
+
+<div ng-show="ad==1">
+<div ng-click="dc()" style="padding:3vh"><!-- && syn-->
+ <img style="width:26%" src="img/dc.png"> 
+ <div style="width:70%;float:right;padding-top:1.5vh;font-size:4vmin;line-height:5vmin">
+<b style="font-size:5.5vmin">The Devil's Calculator</b> <i class="icon ion-android-download"></i>
+<div style="padding-top:.5vh">
+A Math Puzzle Game. Named on the 10 best indie games of 2019 by PAX
+</div>
+</div>
+</div>
+
+ <div style="padding:3vh"> <!--&& wdk-->
+<img style="width:26%" ng-src='img/512.png' ng-click="synonymy()">
+<div ng-click="wordunk()" style="width:70%;float:right;padding-top:2vh;font-size:4vmin;line-height:5vmin">
+<b style="font-size:5.5vmin">Synonymy</b> <i class="icon ion-android-download"></i>
+<div style="padding-top:.5vh">
+A new educational word game narrated by <b>Richard Dawkins</b>
+</div>
+
+ </div>
+<div ng-click="cinq()" style="padding-top:1vh">
+<img src="img/cmm2.png" style="width:25%;padding-top:3vh;padding-left:5vh">
+  <div style="width:75%;padding:1.5vh;padding-top:3vh !important;font-size:2.7vmin;float:right;line-height:3.5vmin">
+<b>Cinq-Mars Media</b> is a 501(c)3 non-profit specializing in educational and social software</div>
+
+</div>
+</div>
+</div>
+
+<!-- -->
+
+
+
+
+<!--
+   <div class="padding" ng-click="tmm()">
+<img style="width:25%" ng-src='img/example.png'>
+<div style="width:70%;float:right;padding-top:2vh;font-size:4vmin;line-height:5vmin">
+<b style="font-size:5.5vmin">TypeMyMusic   </b>
+<div style="padding-top:.5vh">
+A free and easy to use music notation <b>font</b>. 
+</div>
+</div>
+ </div>
+
+ <div class="padding" ng-click="sugarsweet()">
+<img style="width:25%" ng-src='img/sugarsweet.png'>
+<div style="width:70%;float:right;padding-top:2vh;font-size:4vmin;line-height:5vmin">
+<b style="font-size:5.5vmin">SugarSweet  </b>
+<div style="padding-top:.5vh">
+Detects sugar alcohols and artifical sweeteners for colitis or crohns. 
+</div>
+</div>
+ </div>
+
+ -->
+
+<div id="politiemail" ng-show="ad==0">
+<div style="text-align:center;padding-top:12vh">
+  <img src="img/politifact.svg" style="width:88%">
+ </div>   
+    <div style="text-align:center">
+   <h3 style="color:white;font-size:5vmin;padding-top:0px;margin-top:0px">The Facts Delivered to <b><u>your</u></b> inbox</h3>
+               
+  <button ng-click="politiemail()" class="button" style="z-index:99 !important;background-color:rgb(228,62,51); color:white;width:20vh;height:8.3vh;margin-right:2vw;font-size:3vh;padding-top:0vh"><b>Sign Up</b></button>
+</div>
+                   
+                 
+
+
+</div>
+<div ng-click="birds()" ng-show="ad==3">
+<div style="text-align:center;padding:2vh;font-size:2.7vmin">
+<span style="font-size:3vh"><b>The Birds Upstairs</b></span> An Animated Short</div>
+<img src="img/birds2.jpg" style="width:100%">
+<div style="text-align:center;padding:2vh;font-size:2.7vmin;line-height:3.5vmin">
+Frustrated attempts to bear children overwhelm the lives of an aristocratic, avian couple in the early nineteenth century.</div>
+</div>
+
+
+
+</div>
+<hr>
+<div style="text-align:center;padding-top:1vh">
+<button ng-click="closeModalpop(); openModalstats()" class="button" style="z-index:99 !important;background-color:#E3655B; color:white;width:21vh;height:8.7vh;margin-right:2vw;font-size:3vh">
+            <b>Full Stats</b>
+</button>
+
+           <button ng-click="closeModalpop()" class="button button-positive" style="z-index:99 !important;width:21vh;height:8.7vh;margin-left:2vw !important;font-size:3vh">
+            <b>Next</b>  <i class="icon ion-arrow-right-c"></i>
+          </button>
+</div>   
+
+    </ion-modal-view>
+  </script>
+
+</body>
+
+</html>
